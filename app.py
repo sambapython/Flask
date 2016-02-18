@@ -1,5 +1,5 @@
 from flask import Flask,render_template,url_for
-from connect import db_connect   
+from connect import db_connect,get_data   
 import pandas as pd 
 import numpy as np
 import os
@@ -17,6 +17,16 @@ def emp_data():
 	APP_STATIC = os.path.join(APP_ROOT, 'static') # refers the static directory
 	df=pd.read_csv(os.path.join(APP_STATIC, 'e1.csv'))
 	return render_template('emp.html',data=df)
+@app.route('/emp_data')
+def emp_data1():
+	APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
+	APP_STATIC = os.path.join(APP_ROOT, 'static') # refers the static directory
+	df=pd.read_csv(os.path.join(APP_STATIC, 'e1.csv'))
+	return df.to_html()
+@app.route('/db_data')
+def db_data():
+	cols,data=get_data('client')
+	return render_template('db.html',data=data,cols=cols)
 #@app.route('/table')	
 # def fun_table():
 # 	table=pd.read_table('http://www.w3schools.com/html/html_tables.asp')
