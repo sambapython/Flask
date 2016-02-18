@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Bootstrap Case</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="{{ url_for('static', filename='css/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        <div class="row">
+            <h1>page1</h1>
+            {%for person in data%}
+                <p>Name:{{ person['name'] }}</p>
+                <p>Age:{{ person['age'] }}</p>
+                <p>Salary:{{ person['sal'] }}</p>
+            {%endfor%}
+        </div>
+    </div>
+    </body>
+</html>
+
+
+<!-- <html>
+	<head>
+    <link href="{{ url_for('static', filename='css/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+		<title>
+		hello World
+		</title>
+	</head>
+	<body>
+		<h1>Hello World!</h1>
+        {%for person in data%}
+        <p>Name:{{ person['name'] }}</p>
+        <p>Age:{{ person['age'] }}</p>
+        <p>Salary:{{ person['sal'] }}</p>
+        {%endfor%}
+	</body>
+</html> -->

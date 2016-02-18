@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Bootstrap Case</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="{{ url_for('static', filename='css/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        <div class="row">
+          <table class="table">
+            <tr>
+            {%for col in data.columns%}
+              <th>{{ col }}</th>
+              {%endfor%}
+            </tr>
+            {%for person in data.values%}
+            <tr>
+              {%for col_value in person%}
+                <td>{{col_value}}</td>
+              {%endfor%}
+            </tr>
+            {%endfor%}
+          </table>
+        </div>
+    </div>
+    </body>
+</html>
