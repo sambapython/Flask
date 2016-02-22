@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Client regestration</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="{{ url_for('static', filename='css/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        <div class="form-group">
+          <form action="#" method="POST" class="form-horizontal" role="form">
+          <table class="table">
+          {%for name,size,value in zip(column_name,col_size,col_values)%}
+          <tr><td>{{ name }}</td><td> <input type="text" name="{{ name }}"/></td></tr>
+          {%end%}
+            
+            <tr><td>Address:</td><td> <input type="textarea" name='address'/></td></tr>
+            <tr><td>Cell:</td><td><input type="text" name='cell'/></td></tr>
+            <tr><td>Course_id:</td><td><input type="text" name='course_id'/></td></tr>
+            <tr><td>Remark1:</td><td><input type="textarea" name='remark1'/></td></tr>
+            <tr><td>Remark2:</td><td><input type="textarea" name='remark2'/></td></tr>
+            <tr><td>Remark3:</td><td><input type="textarea" name='remark3'/></td></tr>
+            <tr><td>Remark4:</td><td><input type="textarea" name='remark4'/></td></tr>
+            <tr><td><input type="submit" value="Submit"></td></tr>
+          </table>
+          </form>
+        </div>
+    </div>
+    </body>
+</html>

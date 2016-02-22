@@ -1,5 +1,5 @@
 from flask import Flask,render_template,url_for,request
-from connect import get_data,set_data   
+from connect import get_data,set_data,db_connect   
 import pandas as pd 
 import numpy as np
 import os
@@ -23,6 +23,41 @@ def emp_data1():
 	APP_STATIC = os.path.join(APP_ROOT, 'static') # refers the static directory
 	df=pd.read_csv(os.path.join(APP_STATIC, 'e1.csv'))
 	return df.to_html()
+@app.route('/client/insertion')
+def client_insertion():
+	conn=db_connect() # to get the connection object
+	cur=conn.cursor() # creting cursor object
+	cur.execute('select id from client') 
+	max_id=max([i[0] for i in cur.fetchall()]) # to get max id in the total ids of the client table
+	max_id=max_id+1
+	dict_vals={'id':str(max_id),
+				'name':'name5',
+				'address':'address5',
+				'cell':'5689789',
+				'course_id':'1',
+				'remark1':'remarks1',
+				'remark2':'remarks2',
+				'remark3':'remarks3',
+				'remark4':'remarks4',}
+	query="INSERT INTO client(id,name,address,cell,course_id,remark1,remark2,remark3,remark4) VALUES (%(id)s,%(name)s,%(address)s,%(cell)s,%(course_id)s,%(remark1)s,%(remark2)s,%(remark3)s,%(remark4)s)"
+	cur.execute(query,dict_vals)
+	#cur.execute("insert into client(id,name,address,cell,course_id,remark1,remark2,remark3,remark4) values("+str(max_id+1)+",'name5','address5',5689789,1,'remarks1','remarks2','remarks3','remarks4') ") # query execution
+	conn.commit() # To save the changes in database
+	cur.close() # closing the cursor
+	conn.close()  # closing the connection
+	return "secussfully inserted!"
+@app.route('/registration/<table_name>',methods=['GET','POST']):
+def create(table_name):
+	conn=db_connect() # to get the connection object
+	cur=conn.cursor() # creting cursor object
+	if request.method=="POST":
+		flag=set_data(table_name,request.form)
+	else:
+		cur.execute("select column_name, data_type, character_maximum_length from INFORMATION_SCHEMA.COLUMNS where table_name = "+table_name+";")
+		print cur.fetchall(),"$$$$$$$$$$$$$$$$"
+		return render_template('common_form.html',column)
+	
+
 @app.route('/db_data/<table>')
 def db_data(table):
 	try:
@@ -34,7 +69,6 @@ def db_data(table):
 def client_reg():
 	if request.method=="POST":
 		flag=set_data('client',request.form)
-		print flag,"@@@@@@@@@@@@@@@@@@@@@@"
 	return render_template('client_reg.html')
 # @app.route('/db_data')
 # def db_data():
